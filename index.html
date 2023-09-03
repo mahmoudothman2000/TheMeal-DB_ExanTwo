@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"content="">
+    <!-- Bootstrap Framework -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Added The Picture Before your page title - top website title-->
+    <link rel="icon" href="">
+    <!-- Render All Elements Normally  -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- Font Awesome Library -->
+    <link rel="stylesheet" href="css/all.min.css">
+    <!-- Main Template Css File -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Main Template  Media Responsive Css File -->
+    <link rel="stylesheet" href="css/media.css">
+    <!-- Main Font Family Files  Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Smooch&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>TheMeal-DB</title>
+  </head>
+  <body class="bg-black">
+
+    <!-- ^ Page NavBar -->
+    <div>
+      <div class="outer-loading position-absolute  top-0 start-0 end-0 bottom-0 justify-content-center align-items-center bg-black">
+        <i class="fa fa-spinner fa-spin fa-5x text-white "></i>
+      </div>
+      
+      <div class="main-container position-fixed ">
+        <nav class="container d-flex p-0 ">
+          <div class="links bg-black text-white d-flex justify-content-between flex-column p-2">
+            <ul class="text-center">
+              <li class="search">search</li>
+              <li class="categories">categories</li>
+              <li class="area">area</li>
+              <li class="ingredients">ingredients</li>
+              <li class="contact">contact us</li>
+            </ul>
+            <footer class="">
+              <i class="fa-brands fa-facebook"></i>
+              <i class="fa-brands fa-twitter"></i>
+              <i class="fa-solid fa-globe"></i>
+              <p class="copyRight">Copyright Â© 2019 All Rights <br>Reserved.</p>
+            </footer>
+          </div>
+  
+          <div class="icons bg-white d-flex justify-content-between flex-column p-3 align-items-center">
+            <span class="image d-inline-block"><img src="image/logo.jpg" class="w-100" alt=""></span>
+            <span id="openBtn" class="d-inline-block"><i id="close" class="fa-solid fa-xmark d-none fs-1"></i><i id="open" class="fa-solid close-icon fa-align-justify fa-2x"></i> </span>
+            <div>                                      
+              <span class="d-block"><i class="fa-solid fa-share-nodes"></i></span>
+              <span class="d-block"><i class="fa-solid fa-globe"></i></span>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- ^ Page All Meals -->
+    <div class="fullContainer">
+      <div class="inner-loading position-absolute  top-0 start-0 end-0 bottom-0 justify-content-center align-items-center bg-black">
+        <i class="fa fa-spinner fa-spin fa-5x text-white"></i>
+      </div>
+
+      <section  class="container overflow-hidden ">
+          <div id="inputSearch"></div>
+          <section id="search"      class="container overflow-hidden ">
+            <div class="row g-4 mt-2" id="rowDataSearch">
+            </div>
+          </section>
+          <div  class="row mt-5 g-4 " id="rowData"></div>
+      </section>
+    </div>
+
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script src="JS/code.jquery.com_jquery-3.7.0.min.js"></script>
+    <script type="module" src="JS/main.js"></script>
+  </body>
+</html>

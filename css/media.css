@@ -1,0 +1,43 @@
+@media all and (max-width: 575px)  {}
+@media all and (min-width: 576px) and (max-width: 767px){}
+@media all and (min-width: 768px) and (max-width: 991px){}
+@media all and (min-width: 992px) and (max-width: 1199px){}
+@media all and (min-width: 1200px) {}
+
+/* Start Media query */
+  /* Very Small Screen */
+    @media all and (max-width: 575px)  {}
+
+    /* Small Screen */
+    @media all and (min-width: 576px) and (max-width: 767px){}
+
+    /*Medium Screen */
+    @media all and (min-width: 768px) and (max-width: 991px){}
+
+    /*Large Screen */
+    @media all and (min-width: 992px) and (max-width: 1199px){}
+
+    /*Very Large Screen */
+    @media all and (min-width: 1200px) {}
+/* End Media query */
+
+/* *************************************************************** */
+
+/* Start Media query */
+  /* Very Small Screen */
+    @media all and (max-width: 575px)  {}
+    /* @media all and (max-width: 600px)  {} */
+
+    /* Small Screen */
+    @media all and (min-width: 576px) {}
+
+    /*Medium Screen */
+    @media all and (min-width: 768px) {}
+
+    /*Large Screen */
+    @media all and (min-width: 992px) {}
+
+    /*Very Large Screen */
+    @media all and (min-width: 1200px) {}
+/* End Media query */
+
