@@ -1,8 +1,10 @@
 
 $(document).ready(() => {
-  $(".outer-loading").fadeOut(1000);
-    })
-
+  getDataHome().then(() => {
+      $(".loading").fadeOut(500)
+      $("body").css("overflow", "auto")
+  })
+})
 
 // ^ Handle navBar Animation :
 // let navBar = document.querySelector(".main-container");
@@ -49,23 +51,23 @@ const rowData = document.getElementById("rowData") ;
 const allLinks = document.querySelectorAll(".links ul li");
 
 
-//& ====================== Function Get Current Section  =========================================
+//& ====================== Function Get Current Section  =================================
 // ^ Add Event On All Li In Navbar
   $(".links ul li").click(function (e){
     if(e.target.getAttribute("class") === "search"){
-      console.log("=>JQuery search");
+      // console.log("=>JQuery search");
       AddSearch();
     }else if (e.target.getAttribute("class") === "categories"){
-      console.log("=>JQuery categories");
+      // console.log("=>JQuery categories");
       getCategory();
     }else if(e.target.getAttribute("class") === "area"){
-      console.log("=>JQuery area");
+      // console.log("=>JQuery area");
       getArea();
     }else if(e.target.getAttribute("class") === "ingredients"){
-      console.log("=>JQuery ingredients");
+      // console.log("=>JQuery ingredients");
       getIngredients();
     }else if(e.target.getAttribute("class") === "contact"){
-      console.log("=>JQuery contact");
+      // console.log("=>JQuery contact");
       addContact();
     }
 
@@ -73,7 +75,7 @@ const allLinks = document.querySelectorAll(".links ul li");
   $("#open").removeClass("d-none");
   $("#close").addClass("d-none");
   })
-//& ==============================================================================================
+//& ======================================================================================
 
 
 
@@ -82,16 +84,17 @@ const allLinks = document.querySelectorAll(".links ul li");
 
 
 
-//& Function Add Data In Inner HTML Inter The Home Section:===========================
+//& Function Add Data In Inner HTML Inter The Home Section:===============================
 
     // * Api Filter By Area  :
     async function getDataHome(){
+      $(".loading").fadeIn(100);
       let api = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian");
       let result = await api.json();
       let response = result.meals;
-      displayDataHome (response)
-      // console.log(response);
-      }
+      displayDataHome (response);
+      $(".loading").fadeOut(500); 
+    }
       getDataHome()
 
     // * Function Display Data Home :
@@ -103,9 +106,9 @@ const allLinks = document.querySelectorAll(".links ul li");
         `
           <div class="col-md-3">
             <div class="item  rounded-4  overflow-hidden position-relative">
-              <img src="${element.strMealThumb}" alt="meals" class="w-100 ">
+              <img data-id="${element.idMeal}" src="${element.strMealThumb}" alt="meals" class="w-100 ">
               <div data-id="${element.idMeal}" class="titleImage position-absolute d-flex align-items-center">
-                <h2>${element.strMeal}</h2>
+                <h2 data-id="${element.idMeal}">${element.strMeal}</h2>
               </div>
             </div>
           </div>
@@ -130,18 +133,20 @@ const allLinks = document.querySelectorAll(".links ul li");
 
     // * Function Get Id And Get Element Id Of Array :
     async function checkIdAllHome(e){
+      $(".loading").fadeIn(100);
       let id = e.target.getAttribute("data-id");
       let responseElementById = await getDataById(id);
       DisplayDescription(responseElementById)
-      // console.log("checkIdHome");
-      // console.log(responseElementById);
+      $(".loading").fadeOut(500);
     }
 
     // * Api get Data Meal by Id 
     async function getDataById(id){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       let result = await api.json();
       let response = result.meals[0];
+      $(".loading").fadeOut(500);
       return response ;
     }
 
@@ -185,14 +190,14 @@ const allLinks = document.querySelectorAll(".links ul li");
         document.getElementById("inputSearch").innerHTML = "";
         document.getElementById("rowData").innerHTML = cartona;
       }
-  //& =================================================================================================
+  //& =====================================================================================
 
 
 
 
 
 
-//& Function Add Data In Inner HTML Inter The Search Section:============================
+//& Function Add Data In Inner HTML Inter The Search Section:===============================
 //^ Function Add Data In Search Section : 
 function AddSearch(){
   document.getElementById("rowData").innerHTML = "";
@@ -221,38 +226,24 @@ function AddSearch(){
   // * Api Filter by Meals First Litter  :
   async function getDataLitter(litter){
     if(litter !== ""){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${litter}`);
       let result = await api.json();
       let response = await result.meals;
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-      
-      
-      $(response).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-      displayAllMealSearch (response)
-      // console.log(response);
+      displayAllMealSearch (response);
+      $(".loading").fadeOut(500);
     }
   }
 
   // * Api  Filter by Meals Name :
   async function getDataName(name){
     if(name !== ""){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
       let result = await api.json();
       let response = result.meals;
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-      
-      
-      $(response).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
       displayAllMealSearch (response);
-      // console.log(response);
+      $(".loading").fadeOut(500);
     }
   }
 
@@ -265,9 +256,9 @@ function AddSearch(){
       `
         <div class="col-md-3 ">
           <div class="item  rounded-4  overflow-hidden position-relative">
-            <img src="${element.strMealThumb}" alt="meals" class="w-100 ">
+            <img data-id="${element.idMeal}" src="${element.strMealThumb}" alt="meals" class="w-100 ">
             <div data-id="${element.idMeal}" class="titleImage position-absolute d-flex align-items-center">
-              <h2>${element.strMeal}</h2>
+              <h2 data-id="${element.idMeal}">${element.strMeal}</h2>
             </div>
           </div>
         </div>
@@ -290,34 +281,26 @@ function AddSearch(){
 
   // * Function Get Index And Get Element Index Of Array :
   async function checkIdAllSearch(e){
+    $(".loading").fadeIn(100);
     let id = e.target.getAttribute("data-id");
     let responseElementById = await getDataById(id);
-    
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(responseElementById).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
     document.getElementById("rowDataSearch").innerHTML = "";
     document.getElementById("inputSearch").innerHTML = "";
     DisplayDescription(responseElementById)
-    // console.log("checkIdAll");
-    // console.log(responseElementById);
+    $(".loading").fadeOut(500);
   }
 
   // * Api get Meal by Id 
   async function getDataById(id){
+    $(".loading").fadeIn(100);
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     let result = await api.json();
     let response = result.meals[0];
+    $(".loading").fadeOut(500);
     return response ;
   }
 }
-//& =====================================================================================
+//& ========================================================================================
 
 
 
@@ -326,25 +309,16 @@ function AddSearch(){
 
 
 
-//& Function Add Data In Inner HTML Inter The Category Section:===========================
+//& Function Add Data In Inner HTML Inter The Category Section:=============================
 //^ Function Add Data In Categories Section : 
     // * Api by main Category
     async function getCategory(){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
       let result = await api.json()
       let response = result.categories;
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(response).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
       displayCategory (response);
-      console.log(response);
+      $(".loading").fadeOut(500);
     }
 
     // * Function Display Data Category :
@@ -383,28 +357,20 @@ function AddSearch(){
 
     // * Function Get category And Get Element Category Of Array :
     async function checkCategory(e){
+      $(".loading").fadeIn(100);
       let category = e.target.getAttribute("data-category");
       let responseElementById = await getDataByCategory(category);
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(responseElementById).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-      displayByNameCategory(responseElementById)
-      // console.log("checkIdHome");
-      // console.log(responseElementById);
+      displayByNameCategory(responseElementById);
+      $(".loading").fadeOut(500);
     }
 
     // * Api get Data Meal by Category
     async function getDataByCategory(category){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
       let result = await api.json();
       let response = result.meals;
-      // console.log(response);
+      $(".loading").fadeOut(500);
       return response ;
     }
 
@@ -416,9 +382,9 @@ function AddSearch(){
         cartona += `
           <div class="col-md-3">
             <div class="item  rounded-4  overflow-hidden position-relative">
-              <img src="${element.strMealThumb}" alt="meals" class="w-100 ">
+              <img data-id = "${element.idMeal}" src="${element.strMealThumb}" alt="meals" class="w-100 ">
               <div data-id = "${element.idMeal}" class="titleImage position-absolute d-flex align-items-center">
-                <h2>${element.strMeal}</h2>
+                <h2 data-id = "${element.idMeal}">${element.strMeal}</h2>
               </div>
             </div>
           </div>
@@ -443,21 +409,13 @@ function AddSearch(){
     
     // * Function Get Id And Get Element Id Of Array :
     async function checkCategoryById(e){
+      $(".loading").fadeIn(100);
       let id = e.target.getAttribute("data-id");
       let responseElementById = await getDataById(id);
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(responseElementById).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
       DisplayDescription(responseElementById)
+      $(".loading").fadeOut(500);
     }
-//& ======================================================================================
+//& ========================================================================================
 
 
 
@@ -475,21 +433,12 @@ function AddSearch(){
   //^ Function Add Data In Area Section : 
     // * Api by main Area
     async function getArea(){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?a=list`);
       let result = await api.json()
       let response = result.meals;
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(response).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
       displayArea (response);
-      // console.log(response);
+      $(".loading").fadeOut(500);
     }
 
     // * Function Display Data Area :
@@ -500,9 +449,9 @@ function AddSearch(){
         cartona += 
         `
           <div class="col-md-3">
-            <div  class="item text-white text-center display-1 ">
+            <div data-area="${element.strArea}"  class="item text-white text-center display-1 ">
               <i data-area="${element.strArea}" class="fa-solid fa-house-laptop "></i>
-              <h2>${element.strArea}</h2>
+              <h2 data-area="${element.strArea}">${element.strArea}</h2>
             </div>
           </div>
         `
@@ -526,29 +475,20 @@ function AddSearch(){
 
     // * Function Get category And Get Element Category Of Array :
     async function checkArea(e){
+      $(".loading").fadeIn(100);
       let area = e.target.getAttribute("data-area");
       let responseElementById = await getDataByArea(area);
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(responseElementById).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
       displayByNameArea(responseElementById);
-      // console.log("checkIdHome");
-      // console.log(responseElementById);
+      $(".loading").fadeOut(500);
     }
 
     // * Api get Data Meal by Category
     async function getDataByArea(area){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`);
       let result = await api.json();
       let response = result.meals;
-      // console.log(result);
+      $(".loading").fadeOut(500);
       return response ;
     }
 
@@ -561,9 +501,9 @@ function AddSearch(){
         `
           <div class="col-md-3">
             <div class="item  rounded-4  overflow-hidden position-relative">
-              <img src="${element.strMealThumb}" alt="meals" class="w-100 ">
+              <img data-id= "${element.idMeal}" src="${element.strMealThumb}" alt="meals" class="w-100 ">
               <div data-id= "${element.idMeal}" class="titleImage position-absolute d-flex align-items-center">
-                <h2>${element.strMeal}</h2>
+                <h2 data-id= "${element.idMeal}">${element.strMeal}</h2>
               </div>
             </div>
           </div>
@@ -587,11 +527,12 @@ function AddSearch(){
   //^ Function Add Data In Ingredients Section : 
     // * Api by main Ingredients
     async function getIngredients(){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?i=list`);
       let result = await api.json()
       let response = result.meals;
       displayIngredients (response);
-      // console.log(response);
+      $(".loading").fadeOut(500);
     }
 
     // * Function Display Data Ingredients :
@@ -632,40 +573,20 @@ function AddSearch(){
 
     // * Function Get Ingredients And Get Element Ingredients Of Array :
     async function checkIngredients(e){
+      $(".loading").fadeIn(100);
       let ingredient = e.target.getAttribute("data-ingredient");
       let responseElementById = await getDataByIngredients(ingredient);
-
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(responseElementById).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
-
       displayByNameIngredients(responseElementById);
-      // console.log("checkIdHome");
-      // console.log(responseElementById);
+      $(".loading").fadeOut(500);
     }
 
     // * Api get Data Meal by Ingredients
     async function getDataByIngredients(ingredient){
+      $(".loading").fadeIn(100);
       let api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
       let result = await api.json();
       let response = result.meals;
-      $(".inner-loading").fadeIn(500);
-      $(".inner-loading").addClass("d-flex");
-
-
-      $(response).ready(function () {
-        $(".inner-loading").fadeOut(500);
-        $(".inner-loading").removeClass("d-flex");
-      });
-
-
-      // console.log(response);
+      $(".loading").fadeOut(500);
       return response ;
     }
 
@@ -677,9 +598,9 @@ function AddSearch(){
         cartona += `
           <div class="col-md-3">
             <div class="item  rounded-4  overflow-hidden position-relative">
-              <img src="${element.strMealThumb}" alt="meals" class="w-100 ">
+              <img data-id= "${element.idMeal}" src="${element.strMealThumb}" alt="meals" class="w-100 ">
               <div data-id= "${element.idMeal}" class="titleImage position-absolute d-flex align-items-center">
-                <h2>${element.strMeal}</h2>
+                <h2 data-id= "${element.idMeal}">${element.strMeal}</h2>
               </div>
             </div>
           </div>

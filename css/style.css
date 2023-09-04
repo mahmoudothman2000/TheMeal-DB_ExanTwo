@@ -19,6 +19,7 @@ html {
 body {
   font-family: "Open Sans", sans-serif;
   font-family: 'Work Sans', sans-serif;
+  overflow: hidden;
 }
 
 ul {
@@ -81,22 +82,18 @@ nav.container {
   display: none;
   cursor: pointer;
 }
-.outer-loading {
+
+.loading {
   z-index: 9999;
-  display: flex;
 }
 
-.inner-loading {
-  z-index: 9999;
-  display: none;
-}
-.inner-loading i{
-  transform: translate(-50%,-50%);
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
-  position: relative;
+.loading i.fa-spinner{
+  transform: translate(-50% -50%);
+  -webkit-transform: translate(-50% -50%);
+  -moz-transform: translate(-50% -50%);
+  -ms-transform: translate(-50% -50%);
+  -o-transform: translate(-50% -50%);
+  position: fixed;
   top: 50%;
   left: 50%;
 }
